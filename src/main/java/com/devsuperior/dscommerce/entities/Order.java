@@ -25,6 +25,10 @@ public class Order {
 
     @ManyToOne //Relacionamento de muitos para um
     @JoinColumn(name = "client_id")
+    /*Define o nome da coluna de chave estrangeira na tabela
+    da entidade atual (Order) como client_id.
+    Mapeia o relacionamento entre Order e User, permitindo que
+     o Order se relacione com um User específico.*/
     private User client;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
