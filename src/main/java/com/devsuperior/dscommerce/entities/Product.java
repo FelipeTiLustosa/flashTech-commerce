@@ -3,6 +3,7 @@ package com.devsuperior.dscommerce.entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
@@ -25,14 +26,14 @@ public class Product {
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
-    public Set<OrderItem> Items = new HashSet<>();
+    public Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(Long id, String nome, String description, Double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
@@ -46,12 +47,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.name = nome;
     }
 
     public String getDescription() {
@@ -80,5 +81,17 @@ public class Product {
 
     public Set<Category> getCategorias() {
         return categories;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        items = items;
+    }
+
+    public List<Order> getOrders() {
+        return items.stream().map(x -> x.getOrder()).toList();
     }
 }
