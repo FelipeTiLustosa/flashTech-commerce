@@ -5,7 +5,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
-    @Embeddable
+import java.util.Objects;
+
+@Embeddable
     /* é usada para criar uma classe cujas instâncias
     não representam uma entidade independente, mas, sim,
     são integradas como parte de outra entidade.
@@ -43,5 +45,21 @@ public class OrderItemPK {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItemPK that = (OrderItemPK) o;
+        return Objects.equals(order, that.order) && Objects.equals(product, that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(order);
+        result = 31 * result + Objects.hashCode(product);
+        return result;
     }
 }
