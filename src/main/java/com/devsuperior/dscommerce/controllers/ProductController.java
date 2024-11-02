@@ -5,10 +5,7 @@ import com.devsuperior.dscommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +36,27 @@ public class ProductController {
     @GetMapping
     public Page<ProductDTO> findAll(Pageable pageable) {
         return service.findAll(pageable);
+    }
+
+    @PostMapping
+    public ProductDTO insert(@RequestBody ProductDTO dto) {
+        return service.insert(dto);
+        /*@RequestBody, você está basicamente dizendo ao Spring que:
+        "Eu quero que você pegue os dados do corpo da requisição HTTP." Isso é
+        especialmente útil em requisições do tipo POST ou PUT, onde você está
+        enviando dados para serem processados ou armazenados.
+        "Transforme esses dados em um objeto Java." O Spring automaticamente pega os
+        dados que você enviou (geralmente em formato JSON ou XML) e os converte em um
+        objeto da classe que você especificou
+        como parâmetro do método. No seu caso, é o ProductDTO.
+        "Por favor, use esse objeto para executar o que eu preciso." Assim, você pode utilizar
+        esse objeto já preenchido no seu método, facilitando a manipulação e a lógica de negócios, sem precisar extrair manualmente cada campo do corpo da requisição.
+        Resumindo:
+        A anotação @RequestBody simplifica a recepção de dados em um controlador Spring,
+        permitindo que você trabalhe diretamente com objetos Java, que representam os dados
+        que foram enviados pelo cliente. Portanto, você está declarando que deseja que o
+        Spring faça esse trabalho de forma automática, economizando tempo e reduzindo a
+        possibilidade de erros ao manipular os dados manualmente*/
     }
 
 }
