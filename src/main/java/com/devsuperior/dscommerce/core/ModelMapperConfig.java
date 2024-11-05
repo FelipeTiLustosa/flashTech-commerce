@@ -1,4 +1,4 @@
-package com.devsuperior.dscommerce.configuration;
+package com.devsuperior.dscommerce.core;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

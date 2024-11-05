@@ -5,10 +5,11 @@ import com.devsuperior.dscommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
-
+import java.net.URI;
 
 @RestController
 /*Spring automaticamente:
@@ -27,20 +28,47 @@ public class ProductController {
 
     @Autowired
     private ProductService service;
-
+    /*
+    * Esse método permite buscar um produto pelo id e retornar o resultado no corpo
+    * da resposta. Se o produto for encontrado, ele será retornado com o status 200 (OK).
+    * @javadoc
+    * */
     @GetMapping(value = "/{id}")
-    public ProductDTO findById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO dto = service.findById(id);
+        return ResponseEntity.ok(dto);
+        /*ResponseEntity é uma classe usada para definir o status HTTP da
+        resposta e o conteúdo da resposta. ok(dto) cria uma resposta com o status HTTP
+        200 (OK) e o corpo da resposta contendo o ProductDTO.*/
     }
 
     @GetMapping
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
+        Page<ProductDTO> dto = service.findAll(pageable);
+        return ResponseEntity.ok(dto);
+
+        /*Então, ao retornar ResponseEntity<Page<ProductDTO>>, você está enviando
+        de volta uma página de produtos (com as informações de paginação) dentro
+        de uma resposta HTTP completa.*/
     }
 
     @PostMapping
-    public ProductDTO insert(@RequestBody ProductDTO dto) {
-        return service.insert(dto);
+    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+
+        /*URI é um identificador para um recurso específico, como uma URL*/
+
+        /*ServletUriComponentsBuilder.fromCurrentRequest(): Começa a construir uma URI a partir da URL atual (por exemplo, /products).
+        .path("/{id}"): Adiciona /{id} ao final da URL atual, que será o caminho do novo recurso.
+        .buildAndExpand(dto.getId()): Substitui {id} com o ID do produto recém-criado
+        (dto.getId()). Isso cria uma URI completa para acessar o novo produto, como /products/123, onde 123 é o ID gerado.
+        .toUri(): Converte o resultado para um objeto URI.*/
+
+        /*Esse método insere um novo produto no banco de dados e retorna uma resposta com o status 201 (Created), o objeto ProductDTO no corpo da resposta e um cabeçalho Location contendo a URL do novo recurso.*/
+
         /*@RequestBody, você está basicamente dizendo ao Spring que:
         "Eu quero que você pegue os dados do corpo da requisição HTTP." Isso é
         especialmente útil em requisições do tipo POST ou PUT, onde você está
@@ -57,6 +85,12 @@ public class ProductController {
         que foram enviados pelo cliente. Portanto, você está declarando que deseja que o
         Spring faça esse trabalho de forma automática, economizando tempo e reduzindo a
         possibilidade de erros ao manipular os dados manualmente*/
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
     }
 
 }
