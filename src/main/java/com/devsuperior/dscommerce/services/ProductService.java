@@ -55,6 +55,10 @@ public class ProductService {
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }
+    @Transactional // indica que o método ou classe onde ela está aplicada deve ser executado dentro de uma transação padrão de banco de dados, permitindo tanto operações de leitura quanto de escrita
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());

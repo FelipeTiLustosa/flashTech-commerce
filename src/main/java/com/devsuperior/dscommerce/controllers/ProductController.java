@@ -16,7 +16,7 @@ import java.net.URI;
 Serializa Respostas: Os métodos dentro de uma classe anotada com @RestController
 retornam objetos que são automaticamente serializados em JSON (ou XML, dependendo
 da configuração) para a resposta HTTP. Isso significa que não é necessário usar
-@ResponseBody em cada método; essa funcionalidade é incluída implicitamente.
+@ResponseBody em c'ada método; essa funcionalidade é incluída implicitamente.
 Manuseio de Requisições HTTP: Os métodos dentro de um @RestController podem
 responder a requisições HTTP (como GET, POST, PUT, DELETE) usando anotações
 como @GetMapping, @PostMapping, @PutMapping e @DeleteMapping.*/
@@ -91,6 +91,15 @@ public class ProductController {
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();// No caso o codigo vai ser 204 q dizer q deu certo ir nao tem corpo,
+
+        //noContent() Ele indica que o status HTTP da resposta deve ser 204 No Content,
+        //build();  ele cria e devolve uma instância de ResponseEntity com o status e as configurações que foram definidas até o momento.
     }
 
 }
