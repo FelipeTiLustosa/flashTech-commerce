@@ -91,6 +91,7 @@ public class ProductController {
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
+        //ResponseEntity é uma classe do Spring usada para criar respostas HTTP completas, incluindo o código de status, os cabeçalhos e o corpo da resposta
     }
 
     @DeleteMapping(value = "/{id}")
