@@ -32,19 +32,18 @@ public class ControllerExceptionHandler {
         Através dele, conseguimos capturar informações sobre a requisição, como o caminho que o cliente usou para tentar acessar o recurso.*/
     }
 
-    @ExceptionHandler(DatabaseException.class)// Esse é o recado específico para o recepcionista: “Sempre que alguém tentar acessar um recurso que não existe e encontrar uma ResourceNotFoundException, use este método para lidar com a situação.”
+    @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomError> database (DatabaseException e, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.BAD_REQUEST;// 400 Bad Request é usado quando o servidor não consegue processar a solicitação devido a um problema com os dados enviados pelo cliente, como parâmetros inválidos, formato de dados incorreto, etc.
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)// Esse é o recado específico para o recepcionista: “Sempre que alguém tentar acessar um recurso que não existe e encontrar uma ResourceNotFoundException, use este método para lidar com a situação.”
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomError> MethodArgumentNotValid (MethodArgumentNotValidException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;//422 O cliente fez uma requisição válida, mas os dados contêm problemas que impedem o processamento
-        ValidantionError err = new ValidantionError(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
-
-        for (FieldError f : e.getBindingResult().getFieldErrors()){
+        ValidantionError err = new ValidantionError(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());// coloquei esse Dados inválidos para nao aparece o texto padrão q aparece quando a execacao e extourada
+        for (FieldError f : e.getBindingResult().getFieldErrors()){// vai pega os erros referentes as validacoes q fizemos na classe ProductDTO ou em outra
             err.addError(f.getField(),f.getDefaultMessage());
         }
 
