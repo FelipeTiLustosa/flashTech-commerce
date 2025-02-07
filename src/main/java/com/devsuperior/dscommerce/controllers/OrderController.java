@@ -39,7 +39,7 @@ public class OrderController {
      * da resposta. Se o produto for encontrado, ele será retornado com o status 200 (OK).
      * @javadoc
      * */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CLIENT')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<OrderDTO> findById(@PathVariable Long id) {
         OrderDTO dto = service.findById(id);

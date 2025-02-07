@@ -2,7 +2,6 @@ package com.devsuperior.dscommerce.services;
 
 import com.devsuperior.dscommerce.dto.OrderDTO;
 import com.devsuperior.dscommerce.dto.OrderItemDTO;
-import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.entities.*;
 import com.devsuperior.dscommerce.repositories.OrderItemRepository;
 import com.devsuperior.dscommerce.repositories.OrderRepository;
@@ -29,10 +28,15 @@ public class OrderService   {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true) // Esse parâmetro indica que o método não vai realizar alterações nos dados, apenas fazer consultas.
     public OrderDTO findById(Long id){
         Order order  = repository.findById(id).orElseThrow(// vai tenta acessa o obj, caso nao encontre vai lanca uma exceção
                 ()-> new ResourceNotFoundException("Recurso não encontrado"));// exceção criada
+        //O pedido so vai ser carregado caso ele seja o dono do pedido ou admin, caso contrario vai lança um 403
+        authService.validateSelfOrAdmin(order.getClient().getId());
         return new OrderDTO(order);
     }
 
