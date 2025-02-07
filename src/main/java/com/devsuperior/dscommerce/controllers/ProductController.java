@@ -32,10 +32,10 @@ public class ProductController {
     @Autowired
     private ProductService service;
     /*
-    * Esse método permite buscar um produto pelo id e retornar o resultado no corpo
-    * da resposta. Se o produto for encontrado, ele será retornado com o status 200 (OK).
-    * @javadoc
-    * */
+     * Esse método permite buscar um produto pelo id e retornar o resultado no corpo
+     * da resposta. Se o produto for encontrado, ele será retornado com o status 200 (OK).
+     * @javadoc
+     * */
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO dto = service.findById(id);
