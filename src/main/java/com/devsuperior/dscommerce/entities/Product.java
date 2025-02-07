@@ -96,6 +96,8 @@ public class Product {
         return items.stream().map(x -> x.getOrder()).toList();
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
