@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderItem {
+public class    OrderItem {
 
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
@@ -18,7 +18,7 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Product product,Order order, Integer quantity, Double price) {
+    public OrderItem(Order order,Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
