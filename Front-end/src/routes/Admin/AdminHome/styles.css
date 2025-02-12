@@ -1,0 +1,51 @@
+#admin-home-section {
+    padding: 20px 0;
+}
+
+.dsc-welcome-admin {
+    background-color: var(--dsc-color-card-bg);
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dsc-welcome-admin h2 {
+    color: var(--dsc-color-font-primary);
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Estilizando o nome entre parênteses */
+.dsc-welcome-admin h2 {
+    color: var(--dsc-color-font-primary);
+}
+
+/* O texto entre parênteses terá a cor primária */
+.dsc-welcome-admin h2 {
+    color: var(--dsc-color-font-primary);
+}
+
+.dsc-username {
+    color: var(--dsc-color-primary);
+    font-weight: 700;
+}
+
+.dsc-welcome-text {
+    font-size: 1.2em;
+    color: var(--dsc-color-font-primary);
+    margin-top: 20px;
+}
+
+.dsc-welcome-text strong {
+    color: var(--dsc-color-primary);
+    font-weight: 700;
+}
+
+.dsc-section-title h2 {
+    color: var(--dsc-color-primary);
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}

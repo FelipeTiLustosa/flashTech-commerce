@@ -1,0 +1,30 @@
+.dsc-header-client {
+    background-color: var(--dsc-color-bg-secondary);
+}
+
+.dsc-logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.dsc-logo-image {
+    width: 124px;
+    height: auto;
+}
+
+/* Estilo específico para o texto "entrar" */
+.dsc-navbar-right a,
+.dsc-navbar-right a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Estilo específico para o carrinho */
+.dsc-header-client .dsc-cart-icon svg {
+    fill: var(--dsc-color-font-tertiary);
+}
+
+.dsc-logged-user-name {
+    color: white;
+    font-weight: 500;
+}

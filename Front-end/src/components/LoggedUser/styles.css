@@ -1,0 +1,20 @@
+.dsc-logged-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dsc-logged-user p {
+    color: white;
+    font-weight: 500;
+}
+
+.dsc-logged-user span {
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.dsc-logged-user span:hover {
+    opacity: 0.8;
+}
